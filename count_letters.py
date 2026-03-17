@@ -36,6 +36,8 @@ def main():
     all_counts = []
     for locale in locales:
         path = f"/usr/share/hunspell/{locale}.dic"
+        if not os.path.exists(path) and '_' not in locale:
+            path = f"/usr/share/hunspell/{locale}_{locale.upper()}.dic"
         if not os.path.exists(path):
             print(f"Error: dictionary not found: {path}", file=sys.stderr)
             sys.exit(1)
