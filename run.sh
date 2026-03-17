@@ -20,10 +20,9 @@ unset IFS
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 mkdir -p "$SCRIPT_DIR/output"
 
-echo "BUILDING: docker build --build-arg HUNSPELL_PACKAGES=\"$HUNSPELL_PACKAGES\" -t languages \"$SCRIPT_DIR\""
-docker build --build-arg HUNSPELL_PACKAGES="$HUNSPELL_PACKAGES" -t languages "$SCRIPT_DIR" > /dev/null
+docker build --build-arg HUNSPELL_PACKAGES="$HUNSPELL_PACKAGES" -t dict-size-comparator "$SCRIPT_DIR" > /dev/null
 docker run --rm \
   -v "$SCRIPT_DIR/count_letters.py:/count_letters.py:ro" \
   -v "$SCRIPT_DIR/output:/output" \
-  languages \
+  dict-size-comparator \
   python3 /count_letters.py "$LOCALES"
